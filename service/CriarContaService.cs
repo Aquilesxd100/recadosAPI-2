@@ -4,10 +4,10 @@ namespace recados_api
 {
     public class CriarContaService
     {
-        public void ValidacaoUsuario(UsuarioModelo modelo){
-            new CriarContaValidator().ValidatorNovaConta(modelo);
+        public void Service(UsuarioModelo modelo){
+            new CriarContaValidator().Validator(modelo);
 
-            new ContaRepository().CriarNovaConta(modelo);
+            new ContaRepository().Repository(modelo);
         }
     }
 

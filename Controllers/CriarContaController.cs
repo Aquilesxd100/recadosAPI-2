@@ -22,14 +22,13 @@ namespace recados_api
                     Guid.NewGuid().ToString()
                 );
 
-            new CriarContaService().ValidacaoUsuario(response);
+            new CriarContaService().Service(response);
           
             return Ok(response); 
 
-            } catch (System.Exception erro) {
-                Console.WriteLine(erro);
-                return new ErroInterno(400, "Deu erro").MandarResposta();
-            };
+            } catch (ErroHTTP erro) {
+                return new CriaErroHTTP().MandarResposta(erro);
+            }
 
         }
     }

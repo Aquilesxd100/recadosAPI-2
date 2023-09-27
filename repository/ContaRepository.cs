@@ -8,7 +8,7 @@ namespace recados_api
         private static string connStr = "server=db4free.net;user=javadevstests;database=lembretesjava6;port=3306;password=f262e259";
         private static MySqlConnection conn = new MySqlConnection(connStr);
 
-        public void CriarNovaConta(UsuarioModelo usuarioInfos){
+        public void Repository(UsuarioModelo usuarioInfos){
             try{
                 Console.WriteLine("Connecting to MySQL...");
                 conn.Open();
