@@ -15,7 +15,7 @@ namespace recados_api
         public ErroHTTPRespostaModelo MostraErroJSON() 
         {
             ErroHTTPRespostaModelo retorno = new ErroHTTPRespostaModelo(){
-                CodigoErro  = StatusErro,
+                CodigoErro = StatusErro,
                 Mensagem = ErroMensagem
             };
             return retorno;
