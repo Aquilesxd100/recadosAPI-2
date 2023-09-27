@@ -1,33 +1,29 @@
-// using System;
-// using System.Collections.Generic;
-// using System.Linq;
-// using System.Threading.Tasks;
-// using Microsoft.AspNetCore.Mvc;
-// using Microsoft.Extensions.Logging;
+using System;
+using Microsoft.AspNetCore.Mvc;
 
-// //Caminho da rota é o nome da Classe e suas chamadas interiores sem o "Controller"
-// namespace recados_api
-// {
-//     [ApiController]
-//     [Route("[controller]")]
-//     public class TestController : ControllerBase
-//     {
+namespace recados_api
+{
+    [ApiController]
+    [Route("[controller]")]
+    public class EntrarContaController : ControllerBase
+    {
+        [HttpGet]
+        public IActionResult Get([FromBody] UsuarioModelo modelo)
+        {
+            try{
+                var response = new UsuarioModelo(
+                    modelo.Username,
+                    modelo.Senha,
+                    Guid.NewGuid().ToString()
+                );
+                
+                string result = new EntrarContaService().Service(modelo);
 
-//         private readonly ILogger<TestController> _logger;
-
-//         public TestController(ILogger<TestController> logger)
-//         {
-//             _logger = logger;
-//         }
-
-//         [HttpGet]
-//         public IActionResult Get()
-//         {
-//             var response = new EntrarConta
-//             {
-//                 Message = "API funcional e rodando!"
-//             };
-//             return Ok(response);
-//         }
-//     }
-// }
+                return Ok(result);
+                
+            }catch (ErroHTTP erro) {
+                return new CriaErroHTTP().MandarResposta(erro);
+            }
+        }
+    }
+}
