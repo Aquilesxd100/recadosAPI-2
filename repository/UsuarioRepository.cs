@@ -33,7 +33,8 @@ namespace recados_api
                     conn.Close();
                     throw new ErroHTTP(404, "Nenhum Usuário com esse Username e Senha encontrado.");
                 }
-
+                
+                data.Close();
                 conn.Close();
                 return "aaa";
 
