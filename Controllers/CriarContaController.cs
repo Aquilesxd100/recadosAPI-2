@@ -23,7 +23,7 @@ namespace recados_api
                 );
 
             new CriarContaService().ValidacaoUsuario(response);
-            throw new ArgumentException("saa");
+          
             return Ok(response); 
 
             } catch (System.Exception erro) {
