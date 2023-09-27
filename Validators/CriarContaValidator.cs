@@ -4,23 +4,21 @@ namespace recados_api
 {
     public class CriarContaValidator
     {
-        private ValidatorNovaContaReturn validation;
-        public ValidatorNovaContaReturn ValidatorNovaConta(CriarConta novaConta){
+        
+        public ErroInterno ValidatorNovaConta(UsuarioModelo novaConta){
             if(novaConta.Username == null || novaConta.Senha == null){
-                validation = {
-                    Status = false;
-                    Message = "Preencha todos os campos.";
-                };
-                return validation;
+                return new ErroInterno(400, "Preencha todos os campos.");
+            };
+
+            if(novaConta.Username.Length < 5){
+                return new ErroInterno(400, "O Username deve ter no minimo 5 caracteres.");
             };
             
             if(novaConta.Senha.Length > 20 || novaConta.Senha.Length < 8) {
-                validation = {
-                    Status = false; 
-                    Message = "Senha inválida.";
-                };
-                return validation;
+                return new ErroInterno(400, "A senha deve ter no minimo 8 caracteres ou no maximo 20.");
             };
+
+            return null;
         }
     }
 }
