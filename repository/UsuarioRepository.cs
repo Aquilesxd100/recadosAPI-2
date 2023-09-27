@@ -22,27 +22,19 @@ namespace recados_api
             }
         }
         public string EntrarConta(UsuarioModelo usuarioInfos){
-            try{
-                Console.WriteLine("Connecting to MySQL...");
-                conn.Open();
-                string sql = $"SELECT * FROM Usuario WHERE Username = '{usuarioInfos.Username}' and Senha = '{usuarioInfos.Senha}'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                MySqlDataReader data = cmd.ExecuteReader();
-
-                if(!data.Read()){
-                    conn.Close();
-                    throw new ErroHTTP(404, "Nenhum Usuário com esse Username e Senha encontrado.");
-                }
-                
-                data.Close();
-                conn.Close();
-                return "aaa";
-
-            }catch (Exception ex){
-                conn.Close();
-                Console.WriteLine(ex.ToString());
-                throw new ErroHTTP(500, "Ocorreu um erro interno.");
+            Console.WriteLine("Connecting to MySQL...");
+            conn.Open();
+            string sql = $"SELECT * FROM Usuario WHERE Username = '{usuarioInfos.Username}' and Senha = '{usuarioInfos.Senha}'";
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            MySqlDataReader data = cmd.ExecuteReader();
+            // Ta dando pau no if
+            
+            if(data.Read()){
+                throw new ErroHTTP(404, "Nenhum Usuário com esse Username e Senha encontrado.");
             }
+                            
+            conn.Close();
+            return "Conta criada com sucesso!";
         }
     }
 }
