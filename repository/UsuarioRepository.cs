@@ -27,8 +27,9 @@ namespace recados_api
             if(user.Username == null && user.Senha == null && user.Id == null || usuarioInfos.Senha != user.Senha){
                 throw new ErroHTTP(404, "Nenhum Usuário com esse Username e Senha encontrado.");
             }
-            
-            return "TOKEN AQUI";
+
+            var token = TokenService.GenerateToken(user.Id);
+            return token;
         }
         public static UsuarioModelo EncontrarUsuario(string Username){
             Console.WriteLine("Connecting to MySQL...");
