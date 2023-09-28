@@ -1,8 +1,10 @@
+using System.Linq;
 using System.Text.RegularExpressions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace recados_api
 {
-    public class UsuarioValidator
+    public class UsuarioValidator : ControllerBase
     {
         readonly string Username;
         readonly string Senha;
@@ -48,7 +50,7 @@ namespace recados_api
             if (!(Username is string)) {
                 return this;
             }
-            UsuarioModelo user = UsuarioRepository.EncontrarUsuario(Username);
+            UsuarioModelo user = UsuarioRepository.EncontrarUsuarioByUsername(Username);
             if (user.Username != null){
                 throw new ErroHTTP(400, "Username já existente.");
             };
@@ -94,6 +96,19 @@ namespace recados_api
                     "A senha deve ter ao menos um número, uma letra minuscula, uma letra maiúscula e um caractere especial."
                 );
             }
+            return this;
+        }
+
+        public UsuarioValidator ValidUserToken()
+        {
+            var IdUser = User.Claims.First(i => i.Type == "Id").Value;
+            
+            UsuarioModelo user = UsuarioRepository.EncontrarUsuarioById(IdUser);
+
+            if (user.Id == null) {
+                throw new ErroHTTP(403, "Você não tem acesso a esse recurso.");
+            };
+            
             return this;
         }
     }

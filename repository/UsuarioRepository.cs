@@ -22,7 +22,7 @@ namespace recados_api
             }
         }
         public string EntrarConta(UsuarioModelo usuarioInfos){
-            UsuarioModelo user = EncontrarUsuario(usuarioInfos.Username);
+            UsuarioModelo user = EncontrarUsuarioByUsername(usuarioInfos.Username);
 
             if(user.Username == null && user.Senha == null && user.Id == null || usuarioInfos.Senha != user.Senha){
                 throw new ErroHTTP(404, "Nenhum Usuário com esse Username e Senha encontrado.");
@@ -31,10 +31,30 @@ namespace recados_api
             var token = TokenService.GenerateToken(user.Id);
             return token;
         }
-        public static UsuarioModelo EncontrarUsuario(string Username){
+        public static UsuarioModelo EncontrarUsuarioByUsername(string Username){
             Console.WriteLine("Connecting to MySQL...");
             conn.Open();
             string sql = $"SELECT * FROM Usuario WHERE Username = '{Username}'";
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            MySqlDataReader leitor = cmd.ExecuteReader();
+
+            UsuarioModelo user = new UsuarioModelo();
+
+            while(leitor.Read()){
+                user.Username = leitor["Username"].ToString();
+                user.Senha = leitor["Senha"].ToString();
+                user.Id = leitor["Id"].ToString();
+            }
+
+            leitor.Close();
+            conn.Close();
+            return user;
+        }
+
+        public static UsuarioModelo EncontrarUsuarioById(string Id){
+            Console.WriteLine("Connecting to MySQL...");
+            conn.Open();
+            string sql = $"SELECT * FROM Usuario WHERE Id = '{Id}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             MySqlDataReader leitor = cmd.ExecuteReader();
 
