@@ -13,9 +13,12 @@ namespace recados_api
         public IActionResult Login([FromBody] UsuarioModelo modelo)
         {
             try{
-                object result = new EntrarContaService().Service(modelo);
+                string result = new LoginService().Service(modelo);
 
-                return Ok(result);
+                return Ok(new {
+                    mensagem = "Login efetuado com sucesso!",
+                    token = $"Bearer {result}"
+                });
                 
             }catch (ErroHTTP erro) {
                 return new CriaErroHTTP().MandarResposta(erro);
