@@ -1,6 +1,8 @@
+using System;
+
 namespace recados_api
 {
-    public class EntrarContaService
+    public class LoginService
     {
         public string Service(UsuarioModelo modelo){
             new UsuarioValidator(modelo.Username, modelo.Senha)
