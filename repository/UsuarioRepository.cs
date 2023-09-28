@@ -5,7 +5,7 @@ using MySql.Data.MySqlClient;
 namespace recados_api
 {
     public class UsuarioRepository {
-        private static string connStr = "server=db4free.net;user=javadevstests;database=lembretesjava6;port=3306;password=f262e259";
+        private static string connStr = Env.dataBaseURL;
         private static MySqlConnection conn = new MySqlConnection(connStr);
 
         public void CriarConta(UsuarioModelo usuarioInfos){
