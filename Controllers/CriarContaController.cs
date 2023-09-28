@@ -12,11 +12,11 @@ namespace recados_api
         public IActionResult Post([FromBody] UsuarioModelo modelo)
         {
             try {
-                var response = new UsuarioModelo(
-                    modelo.Username,
-                    modelo.Senha,
-                    Guid.NewGuid().ToString()
-                );
+                var response = new UsuarioModelo(){
+                    Username = modelo.Username,
+                    Senha = modelo.Senha,
+                    Id = Guid.NewGuid().ToString()
+                };
 
                 new CriarContaService().Service(response);
           
