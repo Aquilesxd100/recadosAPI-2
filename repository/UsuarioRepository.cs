@@ -22,19 +22,34 @@ namespace recados_api
             }
         }
         public string EntrarConta(UsuarioModelo usuarioInfos){
-            Console.WriteLine("Connecting to MySQL...");
-            conn.Open();
-            string sql = $"SELECT * FROM Usuario WHERE Username = '{usuarioInfos.Username}' and Senha = '{usuarioInfos.Senha}'";
-            MySqlCommand cmd = new MySqlCommand(sql, conn);
-            MySqlDataReader data = cmd.ExecuteReader();
-            // Ta dando pau no if
-            
-            if(data.Read()){
+            UsuarioModelo user = EncontrarUsuario(usuarioInfos.Username);
+
+            if(user.Username == null && user.Senha == null && user.Id == null || usuarioInfos.Senha != user.Senha){
                 throw new ErroHTTP(404, "Nenhum Usuário com esse Username e Senha encontrado.");
             }
-                            
-            conn.Close();
-            return "Conta criada com sucesso!";
+            
+            return "TOKEN AQUI";
         }
+        public static UsuarioModelo EncontrarUsuario(string Username){
+            Console.WriteLine("Connecting to MySQL...");
+            conn.Open();
+            string sql = $"SELECT * FROM Usuario WHERE Username = '{Username}'";
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            MySqlDataReader leitor = cmd.ExecuteReader();
+
+            UsuarioModelo user = new UsuarioModelo();
+
+            while(leitor.Read()){
+                user.Username = leitor["Username"].ToString();
+                user.Senha = leitor["Senha"].ToString();
+                user.Id = leitor["Id"].ToString();
+            }
+
+            leitor.Close();
+            conn.Close();
+            return user;
+        }
+
+
     }
 }
