@@ -16,7 +16,6 @@ namespace recados_api
                 return Ok(result);
                 
             }catch (ErroHTTP erro) {
-                Console.WriteLine(erro);
                 return new CriaErroHTTP().MandarResposta(erro);
             }
         }
