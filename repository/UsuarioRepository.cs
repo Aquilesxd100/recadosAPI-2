@@ -31,6 +31,38 @@ namespace recados_api
             var token = TokenService.GenerateToken(user.Id);
             return token;
         }
+        public void DeletarConta(string userId){
+            try{
+                Console.WriteLine("Connecting to MySQL...");
+                conn.Open();
+                string sql = $"DELETE FROM Usuario WHERE Id = '{userId}'";
+                MySqlCommand cmd = new MySqlCommand(sql, conn);
+                cmd.ExecuteReader();
+                conn.Close();
+                
+            }catch (Exception ex){
+                Console.WriteLine(ex.ToString());
+                throw new ErroHTTP(500, "Ocorreu um erro interno.");
+            }
+        }
+        public void AtualizarConta(string userId, UsuarioModelo modelo){
+            UsuarioModelo user = EncontrarUsuarioById(userId);
+            if(user.Id == null){
+                throw new ErroHTTP(404, "Nenhum Usuário com esse Id encontrado.");
+            }
+
+            var userAtualizado = new {
+                Username = modelo.Username ?? user.Username,
+                Senha = modelo.Senha ?? user.Senha
+            };
+
+            Console.WriteLine("Connecting to MySQL...");
+            conn.Open();
+            string sql = $"UPDATE Usuario SET Username = '{userAtualizado.Username}', Senha = '{userAtualizado.Senha}' WHERE Id = '{userId}'";
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            cmd.ExecuteReader();
+            conn.Close();
+        }
         public static UsuarioModelo EncontrarUsuarioByUsername(string Username){
             Console.WriteLine("Connecting to MySQL...");
             conn.Open();
