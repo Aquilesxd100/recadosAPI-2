@@ -6,8 +6,7 @@ namespace recados_api
     {
         public string Service(UsuarioModelo modelo){
             new UsuarioValidator(modelo.Username, modelo.Senha)
-                .CampoPreechido()
-                .CampoType()
+                .CamposType()
                 .QntCaracteres()
                 .CaracterInvalido();
             return new UsuarioRepository().EntrarConta(modelo);
