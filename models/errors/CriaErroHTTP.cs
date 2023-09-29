@@ -12,6 +12,8 @@ namespace recados_api
                     return Unauthorized(erro.MostraErroJSON());
                 case 400:
                     return BadRequest(erro.MostraErroJSON());
+                case 403:
+                    return StatusCode(403, new ErroHTTP(403, erro.ErroMensagem).MostraErroJSON());
                 case 404:
                     return NotFound(erro.MostraErroJSON());
                 default:
