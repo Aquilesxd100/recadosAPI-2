@@ -53,11 +53,34 @@ namespace recados_api
         [Route("/DeletarConta")]
         [Authorize]
         [HttpDelete]
-        public IActionResult DeletarConta([FromBody] UsuarioModelo modelo)
+        public IActionResult DeletarConta()
         {
             try{
-                return Ok();
+                string userId = User.Claims.First(i => i.Type == "Id").Value;
+
+                new DeletarContaService().Service(userId);
+
+                return Ok(new {
+                    mensagem = "Conta excluída com sucesso!"
+                });
                 
+            }catch (ErroHTTP erro) {
+                return new CriaErroHTTP().MandarResposta(erro);
+            }
+        }
+
+        [Route("/AtualizarConta")]
+        [Authorize]
+        [HttpPut]
+        public IActionResult AtualizarConta([FromBody] UsuarioModelo modelo){
+            try{
+                string userId = User.Claims.First(i => i.Type == "Id").Value;
+
+                new AtualizarContaService().Service(userId, modelo);
+                
+                return Ok(new {
+                    mensagem = "Conta atualizada com sucesso!"
+                });
             }catch (ErroHTTP erro) {
                 return new CriaErroHTTP().MandarResposta(erro);
             }
