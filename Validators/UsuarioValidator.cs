@@ -1,10 +1,8 @@
-using System.Linq;
 using System.Text.RegularExpressions;
-using Microsoft.AspNetCore.Mvc;
 
 namespace recados_api
 {
-    public class UsuarioValidator : ControllerBase
+    public class UsuarioValidator
     {
         readonly string Username;
         readonly string Senha;
@@ -33,15 +31,26 @@ namespace recados_api
             return this;
         }
         
-        public UsuarioValidator CampoPreechido(){
-            if (Username == null || Senha == null){
-                throw new ErroHTTP(400, "Preencha todos os campos. (username e senha)");
+        public UsuarioValidator PreencherCampoAtualizar(){
+            if (Username is null && Senha is null){
+                throw new ErroHTTP(400, "Preencha pelo menos um dos campos (username ou senha).");
             };
             return this;
         }
-        public UsuarioValidator CampoType(){
-            if (!(Username is string) || !(Senha is string)) {
-                throw new ErroHTTP(400, "Tipo de um ou mais campos inválido.");
+
+        public UsuarioValidator CampoTypeAtualizar(){
+            if ( !(Username is null) && !(Username is string)){
+                throw new ErroHTTP(400, "O Username precisa estar em formato de texto.");
+            };
+            if (!(Senha is null) && !(Senha is string)){
+                throw new ErroHTTP(400, "A senha precisa estar em formato de texto.");
+            };
+            return this;
+        }
+        
+        public UsuarioValidator CamposType(){
+            if (!(Username is null) && !(Username is string) || !(Senha is null) && !(Senha is string)) {
+                throw new ErroHTTP(400, "Um ou mais campos inválido(s) ou vazio(s).");
             };
             return this;
         }
@@ -58,16 +67,19 @@ namespace recados_api
         }
 
         public UsuarioValidator QntCaracteres(){
-            if (Username is string && Username.Length < 5 || Username.Length > 20){
+            if (Username is string && (Username.Length < 5 || Username.Length > 20)){
                 throw new ErroHTTP(400, "O Username deve ter no minimo 5 caracteres e no maximo 20.");
             };
-            if (Senha is string && Senha.Length > 20 || Senha.Length < 8) {
+            if (Senha is string && (Senha.Length > 20 || Senha.Length < 8)) {
                 throw new ErroHTTP(400, "A senha deve ter no minimo 8 caracteres e no maximo 20.");
             };
             return this;
         }   
 
         public UsuarioValidator SenhaValid(){ 
+            if(Senha == null){
+                return this;
+            }
             bool senhaTemNumero = false;
             bool senhaTemLetraMaiuscula = false;
             bool senhaTemLetraMinuscula = false;
@@ -99,12 +111,9 @@ namespace recados_api
             return this;
         }
 
-        public UsuarioValidator ValidUserToken()
+        public UsuarioValidator ValidUserToken(string userTokenId)
         {
-            var IdUser = User.Claims.First(i => i.Type == "Id").Value;
-            
-            UsuarioModelo user = UsuarioRepository.EncontrarUsuarioById(IdUser);
-
+            UsuarioModelo user = UsuarioRepository.EncontrarUsuarioById(userTokenId);
             if (user.Id == null) {
                 throw new ErroHTTP(403, "Você não tem acesso a esse recurso.");
             };
