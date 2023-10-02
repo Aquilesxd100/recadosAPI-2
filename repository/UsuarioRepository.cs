@@ -9,17 +9,12 @@ namespace recados_api
         private static MySqlConnection conn = new MySqlConnection(connStr);
 
         public void CriarConta(UsuarioModelo usuarioInfos){
-            try{
-                Console.WriteLine("Connecting to MySQL...");
-                conn.Open();
-                string sql = $"INSERT INTO Usuario VALUES ('{usuarioInfos.Username}', '{usuarioInfos.Senha}', '{usuarioInfos.Id}')";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                cmd.ExecuteReader();
-                conn.Close();
-            }catch (Exception ex){
-                Console.WriteLine(ex.ToString());
-                throw new ErroHTTP(500, "Ocorreu um erro interno.");
-            }
+            Console.WriteLine("Connecting to MySQL...");
+            conn.Open();
+            string sql = $"INSERT INTO Usuario VALUES ('{usuarioInfos.Username}', '{usuarioInfos.Senha}', '{usuarioInfos.Id}')";
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            cmd.ExecuteReader();
+            conn.Close();
         }
         public string EntrarConta(UsuarioModelo usuarioInfos){
             UsuarioModelo user = EncontrarUsuarioByUsername(usuarioInfos.Username);
@@ -32,18 +27,12 @@ namespace recados_api
             return token;
         }
         public void DeletarConta(string userId){
-            try{
-                Console.WriteLine("Connecting to MySQL...");
-                conn.Open();
-                string sql = $"DELETE FROM Usuario WHERE Id = '{userId}'";
-                MySqlCommand cmd = new MySqlCommand(sql, conn);
-                cmd.ExecuteReader();
-                conn.Close();
-                
-            }catch (Exception ex){
-                Console.WriteLine(ex.ToString());
-                throw new ErroHTTP(500, "Ocorreu um erro interno.");
-            }
+            Console.WriteLine("Connecting to MySQL...");
+            conn.Open();
+            string sql = $"DELETE FROM Usuario WHERE Id = '{userId}'";
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            cmd.ExecuteReader();
+            conn.Close();  
         }
         public void AtualizarConta(string userId, UsuarioModelo modelo){
             UsuarioModelo user = EncontrarUsuarioById(userId);
@@ -102,7 +91,5 @@ namespace recados_api
             conn.Close();
             return user;
         }
-
-
     }
 }

@@ -115,7 +115,7 @@ namespace recados_api
         {
             UsuarioModelo user = UsuarioRepository.EncontrarUsuarioById(userTokenId);
             if (user.Id == null) {
-                throw new ErroHTTP(403, "Você não tem acesso a esse recurso.");
+                throw new ErroHTTP(404, "Essa conta de usuario não existe mais.");
             };
             
             return this;

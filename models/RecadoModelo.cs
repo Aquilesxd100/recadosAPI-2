@@ -8,6 +8,7 @@ namespace recados_api
         public string Horario { get; set; }
         public bool Arquivado { get; set; }
         public string Id { get; set; }
+        public string UsuarioId { get; set; }
 
     };
 

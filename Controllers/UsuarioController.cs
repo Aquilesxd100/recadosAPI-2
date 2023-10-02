@@ -14,13 +14,7 @@ namespace recados_api
         public IActionResult CriarConta([FromBody] UsuarioModelo modelo)
         {
             try {
-                var response = new UsuarioModelo(){
-                    Username = modelo.Username,
-                    Senha = modelo.Senha,
-                    Id = Guid.NewGuid().ToString()
-                };
-
-                new CriarContaService().Service(response);
+                new CriarContaService().Service(modelo);
           
                 return Ok(new {
                     mensagem = "Conta criada com sucesso!"

@@ -9,7 +9,9 @@ namespace recados_api
                 .CamposType()
                 .QntCaracteres()
                 .CaracterInvalido();
-            return new UsuarioRepository().EntrarConta(modelo);
+
+            return new UsuarioRepository()
+                .EntrarConta(modelo);
         }
     }
 

@@ -12,7 +12,14 @@ namespace recados_api
                 .CaracterInvalido()
                 .UsernameJaExiste();
 
-            new UsuarioRepository().CriarConta(modelo);
+            var response = new UsuarioModelo(){
+                Username = modelo.Username,
+                Senha = modelo.Senha,
+                Id = Guid.NewGuid().ToString()
+            };
+
+            new UsuarioRepository()
+                .CriarConta(response);
         }
     }
 }

@@ -12,7 +12,8 @@ namespace recados_api
                 .SenhaValid()
                 .UsernameJaExiste();
 
-            new UsuarioRepository().AtualizarConta(userId, modelo);
+            new UsuarioRepository()
+                .AtualizarConta(userId, modelo);
         }
     }
 }
