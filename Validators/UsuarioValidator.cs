@@ -38,6 +38,13 @@ namespace recados_api
             return this;
         }
 
+        public UsuarioValidator PreencherCampos(){
+            if (Username is null || Senha is null){
+                throw new ErroHTTP(400, "Preencha todos os campos (username e senha).");
+            };
+            return this;
+        }
+
         public UsuarioValidator CampoTypeAtualizar(){
             if ( !(Username is null) && !(Username is string)){
                 throw new ErroHTTP(400, "O Username precisa estar em formato de texto.");
