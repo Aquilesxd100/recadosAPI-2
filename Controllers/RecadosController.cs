@@ -10,7 +10,7 @@ namespace recados_api
     {
         [Route("/CriarRecado")]
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize]
         public IActionResult CriarRecado([FromBody] RecadoModelo modelo)
         {
             try {
@@ -25,6 +25,10 @@ namespace recados_api
                 return new CriaErroHTTP().MandarResposta(erro);
             }
         }
+
+        [Route("/DeletarRecado")]
+        [HttpDelete]
+        [Authorize]
         public IActionResult DeletarRecado([FromQuery] string recadoId)
         {
             try {
@@ -34,6 +38,42 @@ namespace recados_api
                 
                 return Ok(new {
                     mensagem = "Recado deletado com sucesso!"
+                });
+            } catch (ErroHTTP erro) {
+                return new CriaErroHTTP().MandarResposta(erro);
+            }
+        }
+        [Route("/AtualizarRecado")]
+        [HttpPut]
+        [Authorize]
+        public IActionResult AtualizarRecado([FromQuery] string recadoId, [FromBody] RecadoModelo modelo)
+        {
+            try {
+                string userId = User.Claims.First(i => i.Type == "Id").Value;
+
+                new AtualizarRecadoService().Service(userId, recadoId, modelo);
+                
+                return Ok(new {
+                    mensagem = "Recado atualizado com sucesso!"
+                });
+            } catch (ErroHTTP erro) {
+                return new CriaErroHTTP().MandarResposta(erro);
+            }
+        }
+
+        [Route("/Recados")]
+        [HttpGet]
+        [Authorize]
+        public IActionResult GetRecados()
+        {
+            try {
+                string userId = User.Claims.First(i => i.Type == "Id").Value;
+
+                RecadoModelo[] recados = new GetRecadosService().Service(userId);
+                
+                return Ok(new {
+                    mensagem = "Seus recados!",
+                    Data = recados
                 });
             } catch (ErroHTTP erro) {
                 return new CriaErroHTTP().MandarResposta(erro);
