@@ -79,5 +79,41 @@ namespace recados_api
                 return new CriaErroHTTP().MandarResposta(erro);
             }
         }
+
+        [Route("/RecadoArquivar")]
+        [HttpPut]
+        [Authorize]
+        public IActionResult ArquivarRecado([FromQuery] string recadoId)
+        {
+            try {
+                string userId = User.Claims.First(i => i.Type == "Id").Value;
+
+                new ArquivarRecadoService().Service(userId, recadoId);
+                
+                return Ok(new {
+                    mensagem = "Recado arquivado"
+                });
+            } catch (ErroHTTP erro) {
+                return new CriaErroHTTP().MandarResposta(erro);
+            }
+        }
+
+        [Route("/RecadoDesarquivar")]
+        [HttpPut]
+        [Authorize]
+        public IActionResult DesarquivaRecado([FromQuery] string recadoId)
+        {
+            try {
+                string userId = User.Claims.First(i => i.Type == "Id").Value;
+
+                new DesarquivaRecadoService().Service(userId, recadoId);
+                
+                return Ok(new {
+                    mensagem = "Recado desarquivado"
+                });
+            } catch (ErroHTTP erro) {
+                return new CriaErroHTTP().MandarResposta(erro);
+            }
+        }
     }
 }
