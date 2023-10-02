@@ -1,3 +1,4 @@
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -14,7 +15,7 @@ namespace recados_api
                 {
                     new Claim("Id", Id),
                 }),
-                /* Expires = DateTime.UtcNow.AddDays(7), */
+                Expires = DateTime.UtcNow.AddDays(7), 
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var tokenHandle = new JwtSecurityTokenHandler();
