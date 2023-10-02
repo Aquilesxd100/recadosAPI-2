@@ -45,6 +45,13 @@ namespace recados_api
             };
             return this;
         }
+
+        public RecadoValidator CamposPreechidosAtualiza(){
+            if (Data == null && Horario == null && Descricao == null && Titulo == null){
+                throw new ErroHTTP(400, "Preencha pelo menos um dos campos. (data, horario, descricao ou titulo)");
+            };
+            return this;
+        }
         public RecadoValidator CamposType(){
             if (
                 !(Titulo is null) && !(Titulo is string)
@@ -69,15 +76,13 @@ namespace recados_api
         }   
 
         public RecadoValidator FormatoData(){
-            if (!(Data is null)) {
-                bool dataEhValida = true;
-
+            bool formatoDataEhValido(){
                 if (Data.Length != 10) {
-                    dataEhValida = false;
+                    return false;
                 };
 
                 if (Data.Substring(2, 1) != "/" || Data.Substring(5, 1) != "/") {
-                    dataEhValida = false;
+                    return false;
                 };
 
                 if (
@@ -85,15 +90,35 @@ namespace recados_api
                     || !int.TryParse(Data.Substring(3, 2), out _)
                     || !int.TryParse(Data.Substring(6, 4), out _)
                 ) {
-                    dataEhValida = false;
+                    return false;
                 };
 
-                if (!dataEhValida) {
-                    throw new ErroHTTP(400, "O formato da data do recado é invalida. (xx/xx/xxxx)");
+                if (int.Parse(Data.Substring(0, 2)) > 31 ||  int.Parse(Data.Substring(0, 2)) <= 0) {
+                    return false;
                 };
-            }
+
+                if (int.Parse(Data.Substring(3, 2)) > 12 ||  int.Parse(Data.Substring(3, 2)) <= 0) {
+                    return false;
+                };
+
+                return true;
+            };
+            if (!(Data is null) && !formatoDataEhValido()) {
+                throw new ErroHTTP(400, "O formato da data do recado é invalida. (xx/xx/xxxx)");
+            };
+
             return this;
         }
+
+
+        public RecadoValidator FormatoDataNow(){
+ /*            if(int.Parse(Data) < int.Parse(DateTime.Now.ToString("dd/MM/yyyy"))){
+                throw new ErroHTTP(400, "Data inválida, bote uma data presente ou futura");
+            } */
+                return this;
+        }
+
+        
         public RecadoValidator FormatoHorario(){
             if (!(Horario is null)) {
                 bool horaEhValida = true;
@@ -105,7 +130,7 @@ namespace recados_api
                 if (Horario.Substring(2, 1) != ":") {
                     horaEhValida = false;
                 };
-///////////
+
                 if (
                     !int.TryParse(Horario.Substring(0, 2), out _)
                     || !int.TryParse(Horario.Substring(3, 2), out _)
@@ -114,11 +139,12 @@ namespace recados_api
                 };
 
                 if (!horaEhValida) {
-                    throw new ErroHTTP(400, "O formato da data do recado é invalida. (xx:xx)");
+                    throw new ErroHTTP(400, "O formato do horário do recado é invalido. (xx:xx)");
                 };
             }
             return this;
         } 
+        //DateTime.Now.ToString("dd/MM/yyyy").CompareTo
         public RecadoValidator PertenceAUsuarioId(string userId, string recadoId){
             RecadoModelo recado = RecadoRepository.EncontrarRecadoByUserIdERecadoId(userId, recadoId);
             if (recado.Titulo == null) {
