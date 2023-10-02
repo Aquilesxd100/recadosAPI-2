@@ -8,7 +8,7 @@ namespace recados_api
             new UsuarioValidator()
                 .ValidUserToken(userId);
             
-            new RecadoValidator(modelo)
+            new RecadoValidator(modelo.Titulo, modelo.Descricao, modelo.Data, modelo.Horario)
                 .CamposPreechidos()
                 .CamposType()
                 .QntCaracteres()
