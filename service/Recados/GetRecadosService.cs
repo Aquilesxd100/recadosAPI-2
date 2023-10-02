@@ -1,7 +1,9 @@
+using System.Collections.Generic;
+
 namespace recados_api
 {
     public class GetRecadosService{
-        public RecadoModelo[] Service(string userId){
+        public List<RecadoModeloGet> Service(string userId){
             new UsuarioValidator()
                 .ValidUserToken(userId);
             
