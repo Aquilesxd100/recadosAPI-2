@@ -6,10 +6,12 @@ namespace recados_api
                 .ValidUserToken(userId);
 
             new RecadoValidator(modelo.Titulo, modelo.Descricao, modelo.Data, modelo.Horario)
+                .CamposPreechidosAtualiza()
                 .CamposType()
                 .QntCaracteres()
                 .CaracterInvalido()
                 .FormatoData()
+                .FormatoDataNow()
                 .FormatoHorario()
                 .PertenceAUsuarioId(userId, recadoId);
             
