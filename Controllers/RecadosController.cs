@@ -1,4 +1,4 @@
-using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -69,7 +69,7 @@ namespace recados_api
             try {
                 string userId = User.Claims.First(i => i.Type == "Id").Value;
 
-                RecadoModelo[] recados = new GetRecadosService().Service(userId);
+                List<RecadoModeloGet> recados = new GetRecadosService().Service(userId);
                 
                 return Ok(new {
                     mensagem = "Seus recados!",
