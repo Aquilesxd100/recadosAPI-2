@@ -63,24 +63,23 @@ namespace recados_api
             conn.Close();
         }
 
-        public RecadoModelo[] GetRecados(string userId){
-             Console.WriteLine("Connecting to MySQL...");
+        public List<RecadoModeloGet> GetRecados(string userId){
+            Console.WriteLine("Connecting to MySQL...");
             conn.Open();
             string sql = $"SELECT * FROM Recado WHERE Usuario_Id = '{userId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             MySqlDataReader leitor = cmd.ExecuteReader();
 
-            List<RecadoModelo> listaRecados = new List<RecadoModelo>();
+            List<RecadoModeloGet> listaRecados = new List<RecadoModeloGet>();
 
             while(leitor.Read()){
-                RecadoModelo recado = new RecadoModelo(){
+                RecadoModeloGet recado = new RecadoModeloGet(){
                     Titulo = leitor["Titulo"].ToString(),
                     Descricao = leitor["Descricao"].ToString(),
                     Data = leitor["Data"].ToString(),
                     Horario = leitor["Horario"].ToString(),
                     Arquivado = leitor["Arquivado"].ToString() == "True" , 
                     Id = leitor["Id"].ToString(),
-                    UsuarioId = leitor["Usuario_Id"].ToString()
                 };
 
                 listaRecados.Add(recado);
@@ -88,7 +87,7 @@ namespace recados_api
 
             leitor.Close();
             conn.Close();
-            return listaRecados.ToArray();
+            return listaRecados;
         }
 
         public static RecadoModelo EncontrarRecadoByUserIdERecadoId(string usuarioId, string recadoId){
