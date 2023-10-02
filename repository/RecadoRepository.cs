@@ -45,6 +45,23 @@ namespace recados_api
             cmd.ExecuteReader();
             conn.Close();
         }
+        public void ArquivaRecado(string recadoId){
+            Console.WriteLine("Connecting to MySQL...");
+            conn.Open();
+            string sql = $"UPDATE Recado SET Arquivado = true WHERE Id = '{recadoId}'";
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            cmd.ExecuteReader();
+            conn.Close();
+        }
+        
+        public void DesarquivaRecado(string recadoId){
+            Console.WriteLine("Connecting to MySQL...");
+            conn.Open();
+            string sql = $"UPDATE Recado SET Arquivado = false WHERE Id = '{recadoId}'";
+            MySqlCommand cmd = new MySqlCommand(sql, conn);
+            cmd.ExecuteReader();
+            conn.Close();
+        }
 
         public RecadoModelo[] GetRecados(string userId){
              Console.WriteLine("Connecting to MySQL...");
@@ -61,7 +78,7 @@ namespace recados_api
                     Descricao = leitor["Descricao"].ToString(),
                     Data = leitor["Data"].ToString(),
                     Horario = leitor["Horario"].ToString(),
-                    Arquivado = leitor["Arquivado"].ToString() == "true" , 
+                    Arquivado = leitor["Arquivado"].ToString() == "True" , 
                     Id = leitor["Id"].ToString(),
                     UsuarioId = leitor["Usuario_Id"].ToString()
                 };
