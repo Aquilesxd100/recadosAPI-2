@@ -120,31 +120,37 @@ namespace recados_api
 
         
         public RecadoValidator FormatoHorario(){
-            if (!(Horario is null)) {
-                bool horaEhValida = true;
-
+            bool formatoHoraEhValido(){
                 if (Horario.Length != 5) {
-                    horaEhValida = false;
+                    return false;
                 };
 
                 if (Horario.Substring(2, 1) != ":") {
-                    horaEhValida = false;
+                    return false;
                 };
 
                 if (
                     !int.TryParse(Horario.Substring(0, 2), out _)
                     || !int.TryParse(Horario.Substring(3, 2), out _)
                 ) {
-                    horaEhValida = false;
+                    return false;
                 };
 
-                if (!horaEhValida) {
-                    throw new ErroHTTP(400, "O formato do horário do recado é invalido. (xx:xx)");
+                if (int.Parse(Horario.Substring(0, 2)) < 0 || int.Parse(Horario.Substring(0, 2)) > 23) {
+                    return false;
                 };
+
+                if (int.Parse(Horario.Substring(3, 2)) < 0 || int.Parse(Horario.Substring(3, 2)) > 59) {
+                    return false;
+                };
+
+                return true;
             }
+            if (!(Horario is null) && !formatoHoraEhValido()) {
+                throw new ErroHTTP(400, "O formato do horário do recado é invalido. (xx:xx)");
+            };
             return this;
         } 
-        //DateTime.Now.ToString("dd/MM/yyyy").CompareTo
         public RecadoValidator PertenceAUsuarioId(string userId, string recadoId){
             RecadoModelo recado = RecadoRepository.EncontrarRecadoByUserIdERecadoId(userId, recadoId);
             if (recado.Titulo == null) {
