@@ -7,6 +7,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using System;
+using Microsoft.AspNetCore.Http;
+using Newtonsoft.Json;
 
 namespace recados_api
 {
@@ -45,6 +47,23 @@ namespace recados_api
                         ValidateLifetime = true,
                         ClockSkew = TimeSpan.Zero
                     };
+                    x.Events = new JwtBearerEvents
+                        {
+                            OnChallenge = async (context) =>
+                            {
+                                context.HandleResponse();
+
+                                if (context.AuthenticateFailure != null){
+                                    context.Response.StatusCode = 401;
+
+                                    var jsonResponse = JsonConvert.SerializeObject(new {
+                                        codigoErro = 401,
+                                        mensagem = "Você não tem acesso a esse Recurso"
+                                    });
+                                    await context.HttpContext.Response.WriteAsync(jsonResponse);
+                                }
+                            }
+                        };
                 }
             );
         }
