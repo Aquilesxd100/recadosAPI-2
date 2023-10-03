@@ -29,18 +29,9 @@ namespace recados_api
         }
 
         public void AtualizarRecado(string recadoId, RecadoModelo modelo){
-            RecadoModelo recado = EncontrarRecadoById(recadoId);
-
-            var recadoAtualizado = new {
-                Titulo = modelo.Titulo ?? recado.Titulo,
-                Descricao = modelo.Descricao ?? recado.Descricao,
-                Data = modelo.Data ?? recado.Data,
-                Horario = modelo.Horario ?? recado.Horario,
-            };
-
             Console.WriteLine("Connecting to MySQL...");
             conn.Open();
-            string sql = $"UPDATE Recado SET Titulo = '{recadoAtualizado.Titulo}', Descricao = '{recadoAtualizado.Descricao}', Data = '{recadoAtualizado.Data}', Horario = '{recadoAtualizado.Horario}' WHERE Id = '{recadoId}'";
+            string sql = $"UPDATE Recado SET Titulo = '{modelo.Titulo}', Descricao = '{modelo.Descricao}', Data = '{modelo.Data}', Horario = '{modelo.Horario}' WHERE Id = '{recadoId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.ExecuteReader();
             conn.Close();
