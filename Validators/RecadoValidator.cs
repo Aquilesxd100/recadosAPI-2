@@ -154,7 +154,7 @@ namespace recados_api
         public RecadoValidator PertenceAUsuarioId(string userId, string recadoId){
             RecadoModelo recado = RecadoRepository.EncontrarRecadoByUserIdERecadoId(userId, recadoId);
             if (recado.Titulo == null) {
-                throw new ErroHTTP(403, "Você não tem acesso a esse recurso.");
+                throw new ErroHTTP(404, "Nenhum recado com esse Id foi encontrado.");
             };
             return this;
         }        
