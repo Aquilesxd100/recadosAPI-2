@@ -11,8 +11,12 @@ namespace recados_api
                 .QntCaracteres()
                 .CaracterInvalido();
 
-            return new UsuarioRepository()
+            var token = new UsuarioRepository()
                 .EntrarConta(modelo);
+
+            Database.conexao.Close();
+
+            return token;
         }
     }
 

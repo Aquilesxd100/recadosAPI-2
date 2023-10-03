@@ -5,16 +5,13 @@ using MySql.Data.MySqlClient;
 namespace recados_api
 {
     public class UsuarioRepository {
-        private static string connStr = Env.dataBaseURL;
-        private static MySqlConnection conn = new MySqlConnection(connStr);
+        private static readonly MySqlConnection conn = Database.conexao;
 
         public void CriarConta(UsuarioModelo usuarioInfos){
             Console.WriteLine("Connecting to MySQL...");
-            conn.Open();
             string sql = $"INSERT INTO Usuario VALUES ('{usuarioInfos.Username}', '{usuarioInfos.Senha}', '{usuarioInfos.Id}')";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.ExecuteReader();
-            conn.Close();
         }
         public string EntrarConta(UsuarioModelo usuarioInfos){
             UsuarioModelo user = EncontrarUsuarioByUsername(usuarioInfos.Username);
@@ -28,11 +25,9 @@ namespace recados_api
         }
         public void DeletarConta(string userId){
             Console.WriteLine("Connecting to MySQL...");
-            conn.Open();
             string sql = $"DELETE FROM Usuario WHERE Id = '{userId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.ExecuteReader();
-            conn.Close();  
         }
         public void AtualizarConta(string userId, UsuarioModelo modelo){
             UsuarioModelo user = EncontrarUsuarioById(userId);
@@ -46,15 +41,12 @@ namespace recados_api
             };
 
             Console.WriteLine("Connecting to MySQL...");
-            conn.Open();
             string sql = $"UPDATE Usuario SET Username = '{userAtualizado.Username}', Senha = '{userAtualizado.Senha}' WHERE Id = '{userId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.ExecuteReader();
-            conn.Close();
         }
         public static UsuarioModelo EncontrarUsuarioByUsername(string Username){
             Console.WriteLine("Connecting to MySQL...");
-            conn.Open();
             string sql = $"SELECT * FROM Usuario WHERE Username = '{Username}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             MySqlDataReader leitor = cmd.ExecuteReader();
@@ -68,13 +60,11 @@ namespace recados_api
             }
 
             leitor.Close();
-            conn.Close();
             return user;
         }
 
         public static UsuarioModelo EncontrarUsuarioById(string Id){
             Console.WriteLine("Connecting to MySQL...");
-            conn.Open();
             string sql = $"SELECT * FROM Usuario WHERE Id = '{Id}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             MySqlDataReader leitor = cmd.ExecuteReader();
@@ -88,7 +78,6 @@ namespace recados_api
             }
 
             leitor.Close();
-            conn.Close();
             return user;
         }
     }

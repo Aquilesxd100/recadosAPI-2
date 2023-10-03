@@ -70,6 +70,11 @@ namespace recados_api
                 string userId = User.Claims.First(i => i.Type == "Id").Value;
 
                 List<RecadoModeloGet> recados = new GetRecadosService().Service(userId);
+                if (recados.Count == 0) {
+                    return Ok(new {
+                        mensagem = "Não há nenhum recado para mostrar.",
+                    });
+                }
                 
                 return Ok(new {
                     mensagem = "Seus recados!",

@@ -87,6 +87,8 @@ namespace recados_api
 
             app.UseAuthentication();
             app.UseAuthorization();
+
+            Database.conexao.Open();
             
             app.UseEndpoints(endpoints =>
             {

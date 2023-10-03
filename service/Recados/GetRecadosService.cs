@@ -7,8 +7,13 @@ namespace recados_api
             new UsuarioValidator()
                 .ValidUserToken(userId);
             
-            return new RecadoRepository()
+            List<RecadoModeloGet> recados = new RecadoRepository()
                 .GetRecados(userId);
+
+            Database.conexao.Close();
+
+            return recados;
+            
         }
     }
 }

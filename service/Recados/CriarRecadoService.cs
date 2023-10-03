@@ -14,6 +14,7 @@ namespace recados_api
                 .QntCaracteres()
                 .CaracterInvalido()
                 .FormatoData()
+                .DataFutura()
                 .FormatoHorario();
             
             var response = new RecadoModelo(){
@@ -28,6 +29,8 @@ namespace recados_api
 
             new RecadoRepository()
                 .CriarRecado(response);
+
+            Database.conexao.Close();
         }
     }
 } 

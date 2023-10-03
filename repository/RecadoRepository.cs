@@ -5,23 +5,19 @@ using MySql.Data.MySqlClient;
 namespace recados_api
 {
     public class RecadoRepository{
-        private static string connStr = Env.dataBaseURL;
-        private static MySqlConnection conn = new MySqlConnection(connStr);
+        private static readonly MySqlConnection conn = Database.conexao;
 
         public void CriarRecado(RecadoModelo modelo){
 
             Console.WriteLine("Connecting to MySQL...");
-            conn.Open();
             string sql = $"INSERT INTO Recado VALUES ('{modelo.Titulo}', '{modelo.Descricao}', '{modelo.Data}', '{modelo.Horario}', {modelo.Arquivado}, '{modelo.Id}', '{modelo.UsuarioId}')";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.ExecuteReader();
-            conn.Close();
         }
 
         public void DeletarRecado(string recadoId){
 
             Console.WriteLine("Connecting to MySQL...");
-            conn.Open();
             string sql = $"DELETE FROM Recado WHERE Id = '{recadoId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.ExecuteReader();
@@ -30,33 +26,26 @@ namespace recados_api
 
         public void AtualizarRecado(string recadoId, RecadoModelo modelo){
             Console.WriteLine("Connecting to MySQL...");
-            conn.Open();
             string sql = $"UPDATE Recado SET Titulo = '{modelo.Titulo}', Descricao = '{modelo.Descricao}', Data = '{modelo.Data}', Horario = '{modelo.Horario}' WHERE Id = '{recadoId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.ExecuteReader();
-            conn.Close();
         }
         public void ArquivaRecado(string recadoId){
             Console.WriteLine("Connecting to MySQL...");
-            conn.Open();
             string sql = $"UPDATE Recado SET Arquivado = true WHERE Id = '{recadoId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.ExecuteReader();
-            conn.Close();
         }
         
         public void DesarquivaRecado(string recadoId){
             Console.WriteLine("Connecting to MySQL...");
-            conn.Open();
             string sql = $"UPDATE Recado SET Arquivado = false WHERE Id = '{recadoId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.ExecuteReader();
-            conn.Close();
         }
 
         public List<RecadoModeloGet> GetRecados(string userId){
             Console.WriteLine("Connecting to MySQL...");
-            conn.Open();
             string sql = $"SELECT * FROM Recado WHERE Usuario_Id = '{userId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             MySqlDataReader leitor = cmd.ExecuteReader();
@@ -77,13 +66,11 @@ namespace recados_api
             }
 
             leitor.Close();
-            conn.Close();
             return listaRecados;
         }
 
         public static RecadoModelo EncontrarRecadoByUserIdERecadoId(string usuarioId, string recadoId){
             Console.WriteLine("Connecting to MySQL...");
-            conn.Open();
             string sql = $"SELECT * FROM Recado WHERE Usuario_Id = '{usuarioId}' and Id = '{recadoId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             MySqlDataReader leitor = cmd.ExecuteReader();
@@ -101,13 +88,11 @@ namespace recados_api
             }
 
             leitor.Close();
-            conn.Close();
             return recado;
         }
 
         public static RecadoModelo EncontrarRecadoById(string recadoId){
             Console.WriteLine("Connecting to MySQL...");
-            conn.Open();
             string sql = $"SELECT * FROM Recado WHERE Id = '{recadoId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             MySqlDataReader leitor = cmd.ExecuteReader();
@@ -125,7 +110,6 @@ namespace recados_api
             }
 
             leitor.Close();
-            conn.Close();
             return recado;
         }
     }
