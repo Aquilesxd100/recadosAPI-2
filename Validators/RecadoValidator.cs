@@ -111,11 +111,18 @@ namespace recados_api
         }
 
 
-        public RecadoValidator FormatoDataNow(){
- /*            if(int.Parse(Data) < int.Parse(DateTime.Now.ToString("dd/MM/yyyy"))){
-                throw new ErroHTTP(400, "Data inválida, bote uma data presente ou futura");
-            } */
-                return this;
+        public RecadoValidator DataFutura(){
+            if(!(Data is null)){
+                var dataAtual = DateTime.Now;
+                var dataInserida = DateTime.Parse(Data);
+                dataInserida = dataInserida.AddMinutes(int.Parse(Horario.Substring(3, 2)));
+                dataInserida = dataInserida.AddHours(int.Parse(Horario.Substring(0, 2)));
+
+                if (DateTime.Compare(dataInserida, dataAtual) < 0) {
+                    throw new ErroHTTP(400, "Data inválida, insira uma data presente ou futura.");
+                }
+            }
+            return this;
         }
 
         
