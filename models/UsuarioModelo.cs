@@ -1,5 +1,3 @@
-using System;
-
 namespace recados_api
 {
     public class UsuarioModelo
