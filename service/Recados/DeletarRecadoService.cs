@@ -10,8 +10,6 @@ namespace recados_api
 
             new RecadoRepository()
                 .DeletarRecado(recadoId);
-
-            Database.conexao.Close();
         }
     }
 }
