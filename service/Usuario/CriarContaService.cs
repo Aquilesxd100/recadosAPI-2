@@ -22,6 +22,7 @@ namespace recados_api
             new UsuarioRepository()
                 .CriarConta(response);
             
+            Database.conexao.Close();
         }
     }
 }

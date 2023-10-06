@@ -14,6 +14,7 @@ namespace recados_api
             var token = new UsuarioRepository()
                 .EntrarConta(modelo);
 
+            Database.conexao.Close();
             return token;
         }
     }

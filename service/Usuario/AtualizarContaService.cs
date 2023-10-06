@@ -14,6 +14,8 @@ namespace recados_api
 
             new UsuarioRepository()
                 .AtualizarConta(userId, modelo);
+            
+            Database.conexao.Close();
         }
     }
 }

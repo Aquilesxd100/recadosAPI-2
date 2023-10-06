@@ -117,6 +117,7 @@ namespace recados_api
                     mensagem = "Recado desarquivado"
                 });
             } catch (ErroHTTP erro) {
+                Database.conexao.Close();
                 return new CriaErroHTTP().MandarResposta(erro);
             }
         }

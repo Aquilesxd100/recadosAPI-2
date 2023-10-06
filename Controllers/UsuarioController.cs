@@ -76,6 +76,7 @@ namespace recados_api
                     mensagem = "Conta atualizada com sucesso!"
                 });
             }catch (ErroHTTP erro) {
+                Database.conexao.Close();
                 return new CriaErroHTTP().MandarResposta(erro);
             }
         }
