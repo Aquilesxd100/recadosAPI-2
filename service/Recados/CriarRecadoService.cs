@@ -30,7 +30,6 @@ namespace recados_api
             new RecadoRepository()
                 .CriarRecado(response);
 
-            Database.conexao.Close();
         }
     }
 } 

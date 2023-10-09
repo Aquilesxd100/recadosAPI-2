@@ -9,7 +9,6 @@ namespace recados_api
             new UsuarioRepository()
                 .DeletarConta(userId);
             
-            Database.conexao.Close();
         }
     }
 }

@@ -31,7 +31,6 @@ namespace recados_api
             new RecadoRepository()
                 .AtualizarRecado(recadoId, recadoAtualizado);
                 
-            Database.conexao.Close();
         }
     }
 }

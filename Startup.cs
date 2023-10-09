@@ -26,7 +26,7 @@ namespace recados_api
         {
             services.AddCors();
             services.AddControllers();
-            services.AddScoped<AbreConexaoMiddleware, AbreConexaoMiddleware>();
+            // services.AddScoped<AbreConexaoMiddleware, AbreConexaoMiddleware>();
             
             var key = Encoding.ASCII.GetBytes(Env.jwt_secret);
 
@@ -88,8 +88,6 @@ namespace recados_api
 
             app.UseAuthentication();
             app.UseAuthorization();
-            
-            app.UseMiddleware<AbreConexaoMiddleware>();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();

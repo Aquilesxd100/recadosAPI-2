@@ -11,7 +11,6 @@ namespace recados_api
             new RecadoRepository()
                 .DesarquivaRecado(recadoId);
             
-            Database.conexao.Close();
         }
     }
 }

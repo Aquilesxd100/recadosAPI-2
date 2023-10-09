@@ -10,7 +10,6 @@ namespace recados_api
             List<RecadoModeloGet> recados = new RecadoRepository()
                 .GetRecados(userId);
 
-            Database.conexao.Close();
             return recados;
             
         }

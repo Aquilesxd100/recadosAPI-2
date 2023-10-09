@@ -45,7 +45,7 @@ namespace recados_api
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.ExecuteReader();
         }
-        public static UsuarioModelo EncontrarUsuarioByUsername(string Username){
+        public static UsuarioModelo  EncontrarUsuarioByUsername(string Username){
             Console.WriteLine("Connecting to MySQL...");
             string sql = $"SELECT * FROM Usuario WHERE Username = '{Username}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
