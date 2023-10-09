@@ -10,12 +10,7 @@ namespace recados_api
 
         static public void AbrirConexao(){
            try{
-                if(conexao.State == ConnectionState.Open){
-                    Console.WriteLine("ABERTA JA");
-                }
-
                 if(conexao.State == ConnectionState.Closed){
-                    Console.WriteLine("ABRINDO");
                     conexao.Open();
                 }
             

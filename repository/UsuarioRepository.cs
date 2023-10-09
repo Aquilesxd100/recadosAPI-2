@@ -10,7 +10,8 @@ namespace recados_api
         public void CriarConta(UsuarioModelo usuarioInfos){
             string sql = $"INSERT INTO Usuario VALUES ('{usuarioInfos.Username}', '{usuarioInfos.Senha}', '{usuarioInfos.Id}')";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
-            cmd.ExecuteReader();
+            MySqlDataReader leitor = cmd.ExecuteReader();
+            leitor.Close();
         }
         public string EntrarConta(UsuarioModelo usuarioInfos){
             UsuarioModelo user = EncontrarUsuarioByUsername(usuarioInfos.Username);
@@ -25,7 +26,8 @@ namespace recados_api
         public void DeletarConta(string userId){
             string sql = $"DELETE FROM Usuario WHERE Id = '{userId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
-            cmd.ExecuteReader();
+            MySqlDataReader leitor = cmd.ExecuteReader();
+            leitor.Close();
         }
         public void AtualizarConta(string userId, UsuarioModelo modelo){
             UsuarioModelo user = EncontrarUsuarioById(userId);
@@ -40,7 +42,8 @@ namespace recados_api
 
             string sql = $"UPDATE Usuario SET Username = '{userAtualizado.Username}', Senha = '{userAtualizado.Senha}' WHERE Id = '{userId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
-            cmd.ExecuteReader();
+            MySqlDataReader leitor = cmd.ExecuteReader();
+            leitor.Close();
         }
         public static UsuarioModelo  EncontrarUsuarioByUsername(string Username){
             string sql = $"SELECT * FROM Usuario WHERE Username = '{Username}'";

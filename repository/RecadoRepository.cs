@@ -8,35 +8,38 @@ namespace recados_api
         private static readonly MySqlConnection conn = Database.conexao;
 
         public void CriarRecado(RecadoModelo modelo){
-
+            Database.AbrirConexao();
             string sql = $"INSERT INTO Recado VALUES ('{modelo.Titulo}', '{modelo.Descricao}', '{modelo.Data}', '{modelo.Horario}', {modelo.Arquivado}, '{modelo.Id}', '{modelo.UsuarioId}')";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
-            cmd.ExecuteReader();
+            MySqlDataReader leitor = cmd.ExecuteReader();
+            leitor.Close();
         }
 
         public void DeletarRecado(string recadoId){
-
             string sql = $"DELETE FROM Recado WHERE Id = '{recadoId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
-            cmd.ExecuteReader();
-            conn.Close();
+            MySqlDataReader leitor = cmd.ExecuteReader();
+            leitor.Close();
         }
 
         public void AtualizarRecado(string recadoId, RecadoModelo modelo){
             string sql = $"UPDATE Recado SET Titulo = '{modelo.Titulo}', Descricao = '{modelo.Descricao}', Data = '{modelo.Data}', Horario = '{modelo.Horario}' WHERE Id = '{recadoId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
-            cmd.ExecuteReader();
+            MySqlDataReader leitor = cmd.ExecuteReader();
+            leitor.Close();;
         }
         public void ArquivaRecado(string recadoId){
             string sql = $"UPDATE Recado SET Arquivado = true WHERE Id = '{recadoId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
-            cmd.ExecuteReader();
+            MySqlDataReader leitor = cmd.ExecuteReader();
+            leitor.Close();;
         }
         
         public void DesarquivaRecado(string recadoId){
             string sql = $"UPDATE Recado SET Arquivado = false WHERE Id = '{recadoId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
-            cmd.ExecuteReader();
+            MySqlDataReader leitor = cmd.ExecuteReader();
+            leitor.Close();;
         }
 
         public List<RecadoModeloGet> GetRecados(string userId){
