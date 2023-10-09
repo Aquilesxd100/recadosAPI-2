@@ -8,7 +8,6 @@ namespace recados_api
         private static readonly MySqlConnection conn = Database.conexao;
 
         public void CriarConta(UsuarioModelo usuarioInfos){
-            Console.WriteLine("Connecting to MySQL...");
             string sql = $"INSERT INTO Usuario VALUES ('{usuarioInfos.Username}', '{usuarioInfos.Senha}', '{usuarioInfos.Id}')";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.ExecuteReader();
@@ -24,7 +23,6 @@ namespace recados_api
             return token;
         }
         public void DeletarConta(string userId){
-            Console.WriteLine("Connecting to MySQL...");
             string sql = $"DELETE FROM Usuario WHERE Id = '{userId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.ExecuteReader();
@@ -40,13 +38,11 @@ namespace recados_api
                 Senha = modelo.Senha ?? user.Senha
             };
 
-            Console.WriteLine("Connecting to MySQL...");
             string sql = $"UPDATE Usuario SET Username = '{userAtualizado.Username}', Senha = '{userAtualizado.Senha}' WHERE Id = '{userId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             cmd.ExecuteReader();
         }
         public static UsuarioModelo  EncontrarUsuarioByUsername(string Username){
-            Console.WriteLine("Connecting to MySQL...");
             string sql = $"SELECT * FROM Usuario WHERE Username = '{Username}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             MySqlDataReader leitor = cmd.ExecuteReader();
@@ -64,7 +60,6 @@ namespace recados_api
         }
 
         public static UsuarioModelo EncontrarUsuarioById(string Id){
-            Console.WriteLine("Connecting to MySQL...");
             string sql = $"SELECT * FROM Usuario WHERE Id = '{Id}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             MySqlDataReader leitor = cmd.ExecuteReader();
