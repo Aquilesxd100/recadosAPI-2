@@ -10,6 +10,7 @@ namespace recados_api
             List<RecadoModeloGet> recados = new RecadoRepository()
                 .GetRecados(userId);
 
+
             return recados;
             
         }

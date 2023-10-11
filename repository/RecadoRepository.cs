@@ -41,17 +41,17 @@ namespace recados_api
             new Database().ExecuteSql(sql);
         }
 
-        public List<RecadoModeloGet> GetRecados(string userId){
+        public List<RecadoModelo2> GetRecados(string userId){
             Database.VerificarConexao();
             Console.WriteLine("Connecting to MySQL... Get Recado");
             string sql = $"SELECT * FROM Recado WHERE Usuario_Id = '{userId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
             MySqlDataReader leitor = cmd.ExecuteReader();
 
-            List<RecadoModeloGet> listaRecados = new List<RecadoModeloGet>();
+            List<RecadoModelo2> listaRecados = new List<RecadoModelo2>();
 
             while(leitor.Read()){
-                RecadoModeloGet recado = new RecadoModeloGet(){
+                RecadoModelo2 recado = new RecadoModelo2(){
                     Titulo = leitor["Titulo"].ToString(),
                     Descricao = leitor["Descricao"].ToString(),
                     Data = leitor["Data"].ToString(),
