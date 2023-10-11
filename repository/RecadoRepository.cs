@@ -8,35 +8,41 @@ namespace recados_api
         private static readonly MySqlConnection conn = Database.conexao;
 
         public void CriarRecado(RecadoModelo modelo){
+            Database.VerificarConexao();
             Console.WriteLine("Connecting to MySQL... Criar Recado");
             string sql = $"INSERT INTO Recado VALUES ('{modelo.Titulo}', '{modelo.Descricao}', '{modelo.Data}', '{modelo.Horario}', {modelo.Arquivado}, '{modelo.Id}', '{modelo.UsuarioId}')";
             new Database().ExecuteSql(sql);
         }
 
         public void DeletarRecado(string recadoId){
+            Database.VerificarConexao();
             Console.WriteLine("Connecting to MySQL... Deletar Recado");
             string sql = $"DELETE FROM Recado WHERE Id = '{recadoId}'";
             new Database().ExecuteSql(sql);
         }
 
         public void AtualizarRecado(string recadoId, RecadoModelo modelo){
+            Database.VerificarConexao();
             Console.WriteLine("Connecting to MySQL... Atualizar Recado");
             string sql = $"UPDATE Recado SET Titulo = '{modelo.Titulo}', Descricao = '{modelo.Descricao}', Data = '{modelo.Data}', Horario = '{modelo.Horario}' WHERE Id = '{recadoId}'";
             new Database().ExecuteSql(sql);
         }
         public void ArquivaRecado(string recadoId){
+            Database.VerificarConexao();
             Console.WriteLine("Connecting to MySQL... Arquivar Recado");
             string sql = $"UPDATE Recado SET Arquivado = true WHERE Id = '{recadoId}'";
             new Database().ExecuteSql(sql);
         }
         
         public void DesarquivaRecado(string recadoId){
+            Database.VerificarConexao();
             Console.WriteLine("Connecting to MySQL... Desarquivar Recado");
             string sql = $"UPDATE Recado SET Arquivado = false WHERE Id = '{recadoId}'";
             new Database().ExecuteSql(sql);
         }
 
         public List<RecadoModeloGet> GetRecados(string userId){
+            Database.VerificarConexao();
             Console.WriteLine("Connecting to MySQL... Get Recado");
             string sql = $"SELECT * FROM Recado WHERE Usuario_Id = '{userId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
@@ -62,6 +68,7 @@ namespace recados_api
         }
 
         public static RecadoModelo EncontrarRecadoByUserIdERecadoId(string usuarioId, string recadoId){
+            Database.VerificarConexao();
             Console.WriteLine("Connecting to MySQL... Encontrar Recado By UserId E RecadoId");
             string sql = $"SELECT * FROM Recado WHERE Usuario_Id = '{usuarioId}' and Id = '{recadoId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
@@ -84,6 +91,7 @@ namespace recados_api
         }
 
         public static RecadoModelo EncontrarRecadoById(string recadoId){
+            Database.VerificarConexao();
             Console.WriteLine("Connecting to MySQL... Encontrar Recado By Id");
             string sql = $"SELECT * FROM Recado WHERE Id = '{recadoId}'";
             MySqlCommand cmd = new MySqlCommand(sql, conn);
