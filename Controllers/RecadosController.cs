@@ -78,7 +78,7 @@ namespace recados_api
                 
                 return Ok(new {
                     mensagem = "Seus recados!",
-                    Data = recados
+                    Recados = recados
                 });
             } catch (ErroHTTP erro) {
                 return new CriaErroHTTP().MandarResposta(erro);
