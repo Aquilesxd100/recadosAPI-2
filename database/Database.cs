@@ -8,14 +8,9 @@ namespace recados_api
         private static string connStr = Env.dataBaseURL;
         public static MySqlConnection conexao = new MySqlConnection(connStr);
 
-        static public void AbrirConexao(){
+        static public void VerificarConexao(){
            try{
-                if(conexao.State == ConnectionState.Open){
-                    Console.WriteLine("ABERTA JA");
-                }
-
                 if(conexao.State == ConnectionState.Closed){
-                    Console.WriteLine("ABRINDO");
                     conexao.Open();
                 }
             
