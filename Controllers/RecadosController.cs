@@ -64,12 +64,21 @@ namespace recados_api
         [Route("/Recados")]
         [HttpGet]
         [Authorize]
-        public IActionResult GetRecados()
+        public IActionResult GetRecados([FromQuery] string buscar, string depoisDe, string antesDe, string turnoDia, string arquivado, string vencido)
         {
             try {
                 string userId = User.Claims.First(i => i.Type == "Id").Value;
 
-                List<RecadoModeloGet> recados = new GetRecadosService().Service(userId);
+                QueriesFiltrosRecadosModelo queries = new QueriesFiltrosRecadosModelo(){
+                    buscar= buscar,
+                    antesDe = antesDe,
+                    depoisDe = depoisDe,
+                    arquivado = arquivado ??= null,
+                    vencido = arquivado ??= null,
+                    turnoDia = turnoDia,
+                };
+
+                List<RecadoModeloGet> recados = new GetRecadosService().Service(userId, queries);
                 if (recados.Count == 0) {
                     return Ok(new {
                         mensagem = "Não há nenhum recado para mostrar.",

@@ -4,13 +4,13 @@ using System.Collections.Generic;
 namespace recados_api
 {
     public class GetRecadosService{
-        public List<RecadoModeloGet> Service(string userId){
+        public List<RecadoModeloGet> Service(string userId, QueriesFiltrosRecadosModelo queries){
             new UsuarioValidator()
                 .ValidUserToken(userId);
             
             List<RecadoModelo2> recadosRepository = new RecadoRepository()
                 .GetRecados(userId);
-            
+
             List<RecadoModeloGet> recados = new List<RecadoModeloGet>();
 
             recadosRepository.ForEach((recado)=>{
@@ -19,7 +19,7 @@ namespace recados_api
                 dataInserida = dataInserida.AddMinutes(int.Parse(recado.Horario.Substring(3, 2)));
                 dataInserida = dataInserida.AddHours(int.Parse(recado.Horario.Substring(0, 2)));
 
-                RecadoModeloGet aaa = new RecadoModeloGet(){
+                RecadoModeloGet recadoComVencimento = new RecadoModeloGet(){
                     Titulo = recado.Titulo,
                     Descricao = recado.Descricao,
                     Data = recado.Data,
@@ -28,11 +28,18 @@ namespace recados_api
                     Id = recado.Id,
                     Vencido = DateTime.Compare(dataInserida, dataAtual) < 0,
                 };
-                recados.Add(aaa);
-
+                recados.Add(recadoComVencimento);
             });
 
-            return recados;
+            QueriesFiltros recadosQueries = new QueriesFiltros(queries, recados)
+                .Buscar()
+                .DepoisDe()
+                .AntesDe()
+                .TurnoDia()
+                .Arquivado()
+                .Vencido();
+
+            return recadosQueries._recados;
         }
     }
 }
