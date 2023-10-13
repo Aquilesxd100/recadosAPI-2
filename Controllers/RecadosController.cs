@@ -74,7 +74,7 @@ namespace recados_api
                     antesDe = antesDe,
                     depoisDe = depoisDe,
                     arquivado = arquivado ??= null,
-                    vencido = arquivado ??= null,
+                    vencido = vencido ??= null,
                     turnoDia = turnoDia,
                 };
 

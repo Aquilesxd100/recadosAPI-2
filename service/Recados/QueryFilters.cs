@@ -15,7 +15,7 @@ namespace recados_api
             _queries = queries;
             _recados = recados;
         }
-        //FALTA TESTAR
+        
         public QueriesFiltros Buscar() {
 
             if (_queries.buscar is string) {
@@ -29,7 +29,7 @@ namespace recados_api
             }
             return this;
         }
-        //FALTA TESTAR
+
         public QueriesFiltros TurnoDia() {
 
             if (_queries.turnoDia is string) {
@@ -86,16 +86,13 @@ namespace recados_api
             return this;
         }
 
-//PAREI AQUI
         public QueriesFiltros Arquivado() {
-            if(!(_queries.arquivado is null)){
-                var filter = _queries.arquivado == "true";
-                if (!filter) {
-                    _recados = _recados.FindAll(
-                        (recado) => 
-                        !recado.Arquivado 
-                    );
-                }
+            var filter = _queries.arquivado == "true";
+            if (!filter) {
+                _recados = _recados.FindAll(
+                    (recado) => 
+                    !recado.Arquivado 
+                );
             }
             return this;
         }
@@ -104,8 +101,8 @@ namespace recados_api
             if (_queries.depoisDe is string && Regex.IsMatch(_queries.depoisDe, @"^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])/\d{4}$")){
                 _recados = _recados.FindAll(
                     (recado) => {
-                        var dataAtual = DateTime.Now;
-                        var dataInserida = DateTime.Parse(recado.Data);
+                        var dataAtual = DateTime.Parse(recado.Data);
+                        var dataInserida = DateTime.Parse(_queries.depoisDe);
                         if(DateTime.Compare(dataAtual, dataInserida) > 0){
                             return true;
                         }
@@ -119,8 +116,8 @@ namespace recados_api
             if (_queries.antesDe is string && Regex.IsMatch(_queries.antesDe, @"^(0[1-9]|[12][0-9]|3[01])\/(0[1-9]|1[0-2])/\d{4}$")){
                 _recados = _recados.FindAll(
                     (recado) => {
-                        var dataAtual = DateTime.Now;
-                        var dataInserida = DateTime.Parse(recado.Data);
+                        var dataAtual = DateTime.Parse(recado.Data);
+                        var dataInserida = DateTime.Parse(_queries.antesDe);
                         if(DateTime.Compare(dataAtual, dataInserida) < 0){
                             return true;
                         }
