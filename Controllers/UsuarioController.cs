@@ -1,4 +1,3 @@
-using System;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -11,7 +10,7 @@ namespace recados_api
         [Route("/CriarConta")]
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult CriarConta([FromBody] UsuarioModelo modelo)
+        public IActionResult CriarConta([FromBody] UsuarioBruto modelo)
         {
             try {
                 new CriarContaService().Service(modelo);
@@ -29,7 +28,7 @@ namespace recados_api
         [Route("/EntrarConta")]
         [HttpPost]
         [AllowAnonymous]
-        public IActionResult EntrarConta([FromBody] UsuarioModelo modelo)
+        public IActionResult EntrarConta([FromBody] UsuarioBruto modelo)
         {
             try{
                 string result = new EntrarContaService().Service(modelo);
@@ -66,7 +65,7 @@ namespace recados_api
         [Route("/AtualizarConta")]
         [Authorize]
         [HttpPut]
-        public IActionResult AtualizarConta([FromBody] UsuarioModelo modelo){
+        public IActionResult AtualizarConta([FromBody] UsuarioBruto modelo){
             try{
                 string userId = User.Claims.First(i => i.Type == "Id").Value;
 

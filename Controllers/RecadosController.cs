@@ -11,12 +11,12 @@ namespace recados_api
         [Route("/CriarRecado")]
         [HttpPost]
         [Authorize]
-        public IActionResult CriarRecado([FromBody] RecadoModelo modelo)
+        public IActionResult CriarRecado([FromBody] RecadoBruto modeloBruto)
         {
             try {
                 string userId = User.Claims.First(i => i.Type == "Id").Value;
 
-                new CriarRecadoService().Service(userId, modelo);
+                new CriarRecadoService().Service(userId, modeloBruto);
                 
                 return Ok(new {
                     mensagem = "Recado criado com sucesso!"
@@ -46,7 +46,7 @@ namespace recados_api
         [Route("/AtualizarRecado")]
         [HttpPut]
         [Authorize]
-        public IActionResult AtualizarRecado([FromQuery] string recadoId, [FromBody] RecadoModelo modelo)
+        public IActionResult AtualizarRecado([FromQuery] string recadoId, [FromBody] RecadoBruto modelo)
         {
             try {
                 string userId = User.Claims.First(i => i.Type == "Id").Value;
