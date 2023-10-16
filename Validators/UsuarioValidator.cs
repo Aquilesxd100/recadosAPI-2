@@ -73,6 +73,20 @@ namespace recados_api
             return this;
         }
 
+        public UsuarioValidator UsernameValid() {
+            bool usernameTemNumero = false;
+            for (int index = 0; index < Username.Length; index++) {
+                if (char.IsDigit(Username, index)) {
+                    usernameTemNumero = true;
+                } 
+            }
+            
+            if(usernameTemNumero){
+                throw new ErroHTTP(400, "Username não pode conter números.");
+            }
+            return this;
+        }
+
         public UsuarioValidator QntCaracteres(){
             if (Username is string && (Username.Length < 5 || Username.Length > 20)){
                 throw new ErroHTTP(400, "O Username deve ter no minimo 5 caracteres e no maximo 20.");
