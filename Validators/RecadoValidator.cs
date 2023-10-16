@@ -46,8 +46,8 @@ namespace recados_api
             return this;
         }
 
-        public RecadoValidator CamposPreechidosAtualiza(){
-            if (Data == null && Horario == null && Descricao == null && Titulo == null){
+        public RecadoValidator CamposPreechidosAtualiza(string dataBruta, string horarioBruto){
+            if (dataBruta == null && horarioBruto == null && Descricao == null && Titulo == null){
                 throw new ErroHTTP(400, "Preencha pelo menos um dos campos. (data, horario, descricao ou titulo)");
             };
             return this;
