@@ -7,5 +7,12 @@ namespace recados_api
         public string Id { get; set; }
 
     };
+    public class UsuarioBruto
+    {
+        public object Username { get; set; }
+        public object Senha { get; set; }
+        public object Id { get; set; }
+
+    };
 
 };
