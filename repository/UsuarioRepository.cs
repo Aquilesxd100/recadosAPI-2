@@ -32,18 +32,9 @@ namespace recados_api
         }
         public void AtualizarConta(string userId, UsuarioModelo modelo){
             Database.VerificarConexao();
-            UsuarioModelo user = EncontrarUsuarioById(userId);
-            if(user.Id == null){
-                throw new ErroHTTP(404, "Nenhum Usuário com esse Id encontrado.");
-            }
-
-            var userAtualizado = new {
-                Username = modelo.Username ?? user.Username,
-                Senha = modelo.Senha ?? user.Senha
-            };
 
             Console.WriteLine("Connecting to MySQL... Atualizar Conta");
-            string sql = $"UPDATE Usuario SET Username = '{userAtualizado.Username}', Senha = '{userAtualizado.Senha}' WHERE Id = '{userId}'";
+            string sql = $"UPDATE Usuario SET Username = '{modelo.Username}', Senha = '{modelo.Senha}' WHERE Id = '{userId}'";
             new Database().ExecuteSql(sql);
         }
         public static UsuarioModelo  EncontrarUsuarioByUsername(string Username){
