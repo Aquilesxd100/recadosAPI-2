@@ -13,9 +13,9 @@ namespace recados_api
                 .CamposType()
                 .QntCaracteres()
                 .CaracterInvalido()
+                .FormatoHorario()
                 .FormatoData()
-                .DataFutura()
-                .FormatoHorario();
+                .DataFutura();
             
             var response = new RecadoModelo(){
                 Titulo = modelo.Titulo,

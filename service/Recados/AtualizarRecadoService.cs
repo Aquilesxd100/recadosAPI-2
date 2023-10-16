@@ -24,8 +24,8 @@ namespace recados_api
                     .QntCaracteres()
                     .CaracterInvalido()
                     .FormatoData()
-                    .DataFutura()
                     .FormatoHorario()
+                    .DataFutura()
                     .PertenceAUsuarioId(userId, recadoId);
             
             new RecadoRepository()
