@@ -1,32 +1,33 @@
 namespace recados_api
 {
     public class AtualizarRecadoService{
-        public void Service(string userId, string recadoId, RecadoModelo modelo){
+        public void Service(string userId, string recadoId, RecadoBruto recadoBruto){
             new UsuarioValidator()
                 .ValidUserToken(userId);
 
             RecadoModelo recado = RecadoRepository.EncontrarRecadoById(recadoId);
+
             RecadoModelo recadoAtualizado = new RecadoModelo{
-                Titulo = modelo.Titulo ?? recado.Titulo,
-                Descricao = modelo.Descricao ?? recado.Descricao,
-                Data = modelo.Data ?? recado.Data,
-                Horario = modelo.Horario ?? recado.Horario,
+                Titulo = recadoBruto.Titulo?.ToString() ?? recado.Titulo,
+                Descricao = recadoBruto.Descricao?.ToString() ?? recado.Descricao,
+                Data = recadoBruto.Data?.ToString() ?? recado.Data,
+                Horario = recadoBruto.Horario?.ToString() ?? recado.Horario,
             };
 
             new RecadoValidator(
-                recadoAtualizado.Titulo, 
-                recadoAtualizado.Descricao, 
-                modelo.Data == null && modelo.Horario == null ? null : recadoAtualizado.Data, 
-                modelo.Horario == null && modelo.Data == null ? null : recadoAtualizado.Horario
+                recadoBruto.Titulo?.ToString(), 
+                recadoBruto.Descricao?.ToString(), 
+                recadoBruto.Data?.ToString() ?? recadoAtualizado.Data, 
+                recadoBruto.Horario?.ToString() ?? recadoAtualizado.Horario
             )
-                    .CamposPreechidosAtualiza()
-                    .CamposType()
-                    .QntCaracteres()
-                    .CaracterInvalido()
-                    .FormatoData()
-                    .FormatoHorario()
-                    .DataFutura()
-                    .PertenceAUsuarioId(userId, recadoId);
+                .CamposPreechidosAtualiza(recadoBruto.Data?.ToString(), recadoBruto.Horario?.ToString())
+                .CamposType()
+                .QntCaracteres()
+                .CaracterInvalido()
+                .FormatoData()
+                .FormatoHorario()
+                .PertenceAUsuarioId(userId, recadoId)
+                .DataFutura();
             
             new RecadoRepository()
                 .AtualizarRecado(recadoId, recadoAtualizado);

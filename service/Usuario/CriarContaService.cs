@@ -4,11 +4,18 @@ namespace recados_api
 {
     public class CriarContaService
     {
-        public void Service(UsuarioModelo modelo){
+        public void Service(UsuarioBruto modeloBruto){
+
+            UsuarioModelo modelo = new UsuarioModelo{
+                Username = modeloBruto.Username?.ToString(),
+                Senha = modeloBruto.Senha?.ToString()
+            };
+
             new UsuarioValidator(modelo.Username, modelo.Senha)
                 .PreencherCampos()
                 .CamposType()
                 .QntCaracteres()
+                .UsernameValid()
                 .SenhaValid()
                 .CaracterInvalido()
                 .UsernameJaExiste();
