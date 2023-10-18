@@ -158,6 +158,14 @@ namespace recados_api
             };
             return this;
         } 
+
+        public RecadoValidator IdRecadoEhValido(string recadoId){
+            if (recadoId == null || recadoId is string && recadoId.Length != 36) {
+                throw new ErroHTTP(400, "Id de recado invalido.");
+            };
+            return this;
+        }
+
         public RecadoValidator PertenceAUsuarioId(string userId, string recadoId){
             RecadoModelo recado = RecadoRepository.EncontrarRecadoByUserIdERecadoId(userId, recadoId);
             if (recado.Titulo == null) {

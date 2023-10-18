@@ -20,6 +20,7 @@ namespace recados_api
                 recadoBruto.Data?.ToString() ?? recadoAtualizado.Data, 
                 recadoBruto.Horario?.ToString() ?? recadoAtualizado.Horario
             )
+                .IdRecadoEhValido(recadoId)
                 .CamposPreechidosAtualiza(recadoBruto.Data?.ToString(), recadoBruto.Horario?.ToString())
                 .CamposType()
                 .QntCaracteres()

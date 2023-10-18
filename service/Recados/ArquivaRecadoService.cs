@@ -6,6 +6,7 @@ namespace recados_api
                 .ValidUserToken(userId);
 
             new RecadoValidator()
+                .IdRecadoEhValido(recadoId)
                 .PertenceAUsuarioId(userId, recadoId);
 
             new RecadoRepository()
