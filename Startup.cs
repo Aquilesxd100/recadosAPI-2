@@ -52,8 +52,8 @@ namespace recados_api
                             OnChallenge = async (context) =>
                             {
                                 context.HandleResponse();
-
-                                if (context.AuthenticateFailure != null){
+                                
+                                if (context.AuthenticateFailure != null || context.Handled){
                                     context.Response.StatusCode = 401;
 
                                     var jsonResponse = JsonConvert.SerializeObject(new {
