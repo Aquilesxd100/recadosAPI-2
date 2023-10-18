@@ -75,13 +75,12 @@ namespace recados_api
             MySqlDataReader leitor = cmd.ExecuteReader();
 
             RecadoModelo recado = new RecadoModelo();
-
             while(leitor.Read()){
                 recado.Titulo = leitor["Titulo"].ToString();
                 recado.Descricao = leitor["Descricao"].ToString();
                 recado.Data = leitor["Data"].ToString();
                 recado.Horario = leitor["Horario"].ToString();
-                recado.Arquivado = leitor["Arquivado"].ToString() == "true";
+                recado.Arquivado = leitor["Arquivado"].ToString() == "True";
                 recado.Id = leitor["Id"].ToString();
                 recado.UsuarioId = leitor["Usuario_Id"].ToString();
             }
@@ -104,7 +103,7 @@ namespace recados_api
                 recado.Descricao = leitor["Descricao"].ToString();
                 recado.Data = leitor["Data"].ToString();
                 recado.Horario = leitor["Horario"].ToString();
-                recado.Arquivado = leitor["Arquivado"].ToString() == "true" ; 
+                recado.Arquivado = leitor["Arquivado"].ToString() == "True" ; 
                 recado.Id = leitor["Id"].ToString();
                 recado.UsuarioId = leitor["Usuario_Id"].ToString();
             }

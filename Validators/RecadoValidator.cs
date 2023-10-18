@@ -166,13 +166,23 @@ namespace recados_api
             return this;
         }
 
-        public RecadoValidator PertenceAUsuarioId(string userId, string recadoId){
+        public RecadoValidator PertenceAUsuarioId(string userId, string recadoId, bool? validacaoArquivadoStatus = null){
             RecadoModelo recado = RecadoRepository.EncontrarRecadoByUserIdERecadoId(userId, recadoId);
             if (recado.Titulo == null) {
                 throw new ErroHTTP(404, "Nenhum recado com esse Id foi encontrado.");
             };
+            if (validacaoArquivadoStatus != null) {
+                ValidaStatusArquivacao(recado, validacaoArquivadoStatus);
+            }
             return this;
-        }        
-
+        }
+        
+        public void ValidaStatusArquivacao(RecadoModelo recado, bool? arquivadoStatusAValidar){
+            if (arquivadoStatusAValidar == true && !recado.Arquivado) {
+                throw new ErroHTTP(400, "Esse recado já esta desarquivado.");
+            } else if (arquivadoStatusAValidar == false && recado.Arquivado) {
+                throw new ErroHTTP(400, "Esse recado já esta arquivado.");
+            }
+        }          
     }
 }

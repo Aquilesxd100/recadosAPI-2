@@ -7,7 +7,7 @@ namespace recados_api
 
             new RecadoValidator()
                 .IdRecadoEhValido(recadoId)
-                .PertenceAUsuarioId(userId, recadoId);
+                .PertenceAUsuarioId(userId, recadoId, true);
 
             new RecadoRepository()
                 .DesarquivaRecado(recadoId);
