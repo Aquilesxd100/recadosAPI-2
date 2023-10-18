@@ -26,7 +26,6 @@ namespace recados_api
         {
             services.AddCors();
             services.AddControllers();
-            // services.AddScoped<AbreConexaoMiddleware, AbreConexaoMiddleware>();
             
             var key = Encoding.ASCII.GetBytes(Env.jwt_secret);
 
