@@ -31,4 +31,10 @@ namespace recados_api
         public object UsuarioId { get; set; }
 
     }
+
+    public class RecadoArquivadoStatusBruto
+    {
+        public object StatusArquivado { get; set; }
+
+    }
 };

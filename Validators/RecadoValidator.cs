@@ -166,22 +166,35 @@ namespace recados_api
             return this;
         }
 
-        public RecadoValidator PertenceAUsuarioId(string userId, string recadoId, bool? validacaoArquivadoStatus = null){
+        public RecadoValidator PertenceAUsuarioId(string userId, string recadoId, string validacaoArquivadoStatus = null){
+            bool arquivadoStatusBool = validacaoArquivadoStatus != null
+                ?
+                    ValidaStatusArquivacaoEnviado(validacaoArquivadoStatus)
+                :
+                    false;
+                    
             RecadoModelo recado = RecadoRepository.EncontrarRecadoByUserIdERecadoId(userId, recadoId);
             if (recado.Titulo == null) {
                 throw new ErroHTTP(404, "Nenhum recado com esse Id foi encontrado.");
             };
             if (validacaoArquivadoStatus != null) {
-                ValidaStatusArquivacao(recado, validacaoArquivadoStatus);
+                ValidaStatusArquivacao(recado, arquivadoStatusBool);
             }
             return this;
         }
-        
-        public void ValidaStatusArquivacao(RecadoModelo recado, bool? arquivadoStatusAValidar){
-            if (arquivadoStatusAValidar == true && !recado.Arquivado) {
-                throw new ErroHTTP(400, "Esse recado já esta desarquivado.");
-            } else if (arquivadoStatusAValidar == false && recado.Arquivado) {
+        static bool ValidaStatusArquivacaoEnviado(string arquivadoStatus){
+            if (arquivadoStatus == "true") {
+                return true;
+            } else if (arquivadoStatus == "false") {
+                return false;
+            }
+            throw new ErroHTTP(400, "Informe um statusArquivado valido. (true ou false)");
+        }  
+        static void ValidaStatusArquivacao(RecadoModelo recado, bool arquivadoStatusAValidar){
+            if (arquivadoStatusAValidar && recado.Arquivado) {
                 throw new ErroHTTP(400, "Esse recado já esta arquivado.");
+            } else if (!arquivadoStatusAValidar && !recado.Arquivado) {
+                throw new ErroHTTP(400, "Esse recado já esta desarquivado.");
             }
         }          
     }

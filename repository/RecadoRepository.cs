@@ -27,17 +27,10 @@ namespace recados_api
             string sql = $"UPDATE Recado SET Titulo = '{modelo.Titulo}', Descricao = '{modelo.Descricao}', Data = '{modelo.Data}', Horario = '{modelo.Horario}' WHERE Id = '{recadoId}'";
             new Database().ExecuteSql(sql);
         }
-        public void ArquivaRecado(string recadoId){
+        public void AtualizaStatusArquivadoRecado(string recadoId, bool statusArquivado){
             Database.VerificarConexao();
             Console.WriteLine("Connecting to MySQL... Arquivar Recado");
-            string sql = $"UPDATE Recado SET Arquivado = true WHERE Id = '{recadoId}'";
-            new Database().ExecuteSql(sql);
-        }
-        
-        public void DesarquivaRecado(string recadoId){
-            Database.VerificarConexao();
-            Console.WriteLine("Connecting to MySQL... Desarquivar Recado");
-            string sql = $"UPDATE Recado SET Arquivado = false WHERE Id = '{recadoId}'";
+            string sql = $"UPDATE Recado SET Arquivado = {statusArquivado} WHERE Id = '{recadoId}'";
             new Database().ExecuteSql(sql);
         }
 

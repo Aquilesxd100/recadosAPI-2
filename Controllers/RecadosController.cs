@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Authorization;
@@ -94,36 +95,22 @@ namespace recados_api
             }
         }
 
-        [Route("/RecadoArquivar")]
+        [Route("/AtualizarStatusArquivado")]
         [HttpPut]
         [Authorize]
-        public IActionResult ArquivarRecado([FromQuery] string recadoId)
+        public IActionResult AtualizarStatusArquivado([FromQuery] string recadoId, [FromBody] RecadoArquivadoStatusBruto statusArquivadoObjBruto)
         {
             try {
                 string userId = User.Claims.First(i => i.Type == "Id").Value;
+                // if(statusArquivadoObjBruto.StatusArquivado == null) {
+                //     statusArquivadoObjBruto = new RecadoArquivadoStatusBruto{StatusArquivado = ""};
+                // }
+                statusArquivadoObjBruto.StatusArquivado ??= new RecadoArquivadoStatusBruto(){StatusArquivado = ""}.StatusArquivado;
 
-                new ArquivarRecadoService().Service(userId, recadoId);
+                new AtualizaStatusArquivadoRecadoService().Service(userId, recadoId, statusArquivadoObjBruto.StatusArquivado.ToString().ToLower());
                 
                 return Ok(new {
-                    mensagem = "Recado arquivado"
-                });
-            } catch (ErroHTTP erro) {
-                return new CriaErroHTTP().MandarResposta(erro);
-            }
-        }
-
-        [Route("/RecadoDesarquivar")]
-        [HttpPut]
-        [Authorize]
-        public IActionResult DesarquivaRecado([FromQuery] string recadoId)
-        {
-            try {
-                string userId = User.Claims.First(i => i.Type == "Id").Value;
-
-                new DesarquivaRecadoService().Service(userId, recadoId);
-                
-                return Ok(new {
-                    mensagem = "Recado desarquivado"
+                    mensagem = statusArquivadoObjBruto.StatusArquivado.ToString().ToLower() == "true" ? "Recado arquivado!" : "Recado desarquivado!"
                 });
             } catch (ErroHTTP erro) {
                 return new CriaErroHTTP().MandarResposta(erro);
