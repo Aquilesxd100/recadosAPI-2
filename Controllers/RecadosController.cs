@@ -102,9 +102,7 @@ namespace recados_api
         {
             try {
                 string userId = User.Claims.First(i => i.Type == "Id").Value;
-                // if(statusArquivadoObjBruto.StatusArquivado == null) {
-                //     statusArquivadoObjBruto = new RecadoArquivadoStatusBruto{StatusArquivado = ""};
-                // }
+           
                 statusArquivadoObjBruto.StatusArquivado ??= new RecadoArquivadoStatusBruto(){StatusArquivado = ""}.StatusArquivado;
 
                 new AtualizaStatusArquivadoRecadoService().Service(userId, recadoId, statusArquivadoObjBruto.StatusArquivado.ToString().ToLower());

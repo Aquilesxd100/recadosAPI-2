@@ -167,11 +167,7 @@ namespace recados_api
         }
 
         public RecadoValidator PertenceAUsuarioId(string userId, string recadoId, string validacaoArquivadoStatus = null){
-            bool arquivadoStatusBool = validacaoArquivadoStatus != null
-                ?
-                    ValidaStatusArquivacaoEnviado(validacaoArquivadoStatus)
-                :
-                    false;
+            bool arquivadoStatusBool = validacaoArquivadoStatus != null && ValidaStatusArquivacaoEnviado(validacaoArquivadoStatus);
                     
             RecadoModelo recado = RecadoRepository.EncontrarRecadoByUserIdERecadoId(userId, recadoId);
             if (recado.Titulo == null) {
