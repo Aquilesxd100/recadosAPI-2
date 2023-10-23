@@ -9,7 +9,7 @@ namespace recados_api
     public class TokenService{
 
         public static string GenerateToken(string Id){
-            var key = Encoding.ASCII.GetBytes(Env.jwt_secret);
+            var key = Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("jwtSecret") ?? Env.jwt_secret);
             var tokenConfig = new SecurityTokenDescriptor{
                 Subject = new System.Security.Claims.ClaimsIdentity(new Claim[]
                 {

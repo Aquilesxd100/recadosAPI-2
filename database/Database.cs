@@ -5,7 +5,7 @@ using MySql.Data.MySqlClient;
 namespace recados_api
 {
     public class Database{
-        private static string connStr = Env.dataBaseURL;
+        private static string connStr = Environment.GetEnvironmentVariable("dataBaseURL") ?? Env.dataBaseURL;
         public static MySqlConnection conexao = new MySqlConnection(connStr);
 
         static public void VerificarConexao(){
