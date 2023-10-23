@@ -114,14 +114,15 @@ namespace recados_api
         public RecadoValidator DataFutura(){
             if(!(Data is null)){
                 var dataAtual = DateTime.Now;
-                var dataInserida = DateTime.Now;
 
-                dataInserida = dataInserida.AddYears(int.Parse(Data.Substring(6, 4)));
-                dataInserida = dataInserida.AddMonths(int.Parse(Data.Substring(3, 2)));
-                dataInserida = dataInserida.AddDays(int.Parse(Data.Substring(0, 2)));
+                int year = int.Parse(Data.Substring(6, 4));
+                int month = int.Parse(Data.Substring(3, 2));
+                int day = int.Parse(Data.Substring(0, 2));
 
-                dataInserida = dataInserida.AddMinutes(int.Parse(Horario.Substring(3, 2)));
-                dataInserida = dataInserida.AddHours(int.Parse(Horario.Substring(0, 2)));
+                int hours = int.Parse(Horario.Substring(0, 2));
+                int minutes = int.Parse(Horario.Substring(3, 2));
+
+                var dataInserida = new DateTime(year, month, day, hours, minutes, 0);
 
                 if (DateTime.Compare(dataInserida, dataAtual) < 0) {
                     throw new ErroHTTP(400, "Data inválida, insira uma data presente ou futura.");
