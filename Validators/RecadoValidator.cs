@@ -114,7 +114,12 @@ namespace recados_api
         public RecadoValidator DataFutura(){
             if(!(Data is null)){
                 var dataAtual = DateTime.Now;
-                var dataInserida = DateTime.Parse(Data);
+                var dataInserida = DateTime.Now;
+
+                dataInserida = dataInserida.AddYears(int.Parse(Data.Substring(6, 4)));
+                dataInserida = dataInserida.AddMonths(int.Parse(Data.Substring(3, 2)));
+                dataInserida = dataInserida.AddDays(int.Parse(Data.Substring(0, 2)));
+
                 dataInserida = dataInserida.AddMinutes(int.Parse(Horario.Substring(3, 2)));
                 dataInserida = dataInserida.AddHours(int.Parse(Horario.Substring(0, 2)));
 

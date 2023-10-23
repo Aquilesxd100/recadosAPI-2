@@ -15,7 +15,12 @@ namespace recados_api
 
             recadosRepository.ForEach((recado)=>{
                 var dataAtual = DateTime.Now;
-                var dataInserida = DateTime.Parse(recado.Data);
+                var dataInserida = DateTime.Now;
+
+                dataInserida = dataInserida.AddYears(int.Parse(recado.Data.Substring(6, 4)));
+                dataInserida = dataInserida.AddMonths(int.Parse(recado.Data.Substring(3, 2)));
+                dataInserida = dataInserida.AddDays(int.Parse(recado.Data.Substring(0, 2)));
+
                 dataInserida = dataInserida.AddMinutes(int.Parse(recado.Horario.Substring(3, 2)));
                 dataInserida = dataInserida.AddHours(int.Parse(recado.Horario.Substring(0, 2)));
 
