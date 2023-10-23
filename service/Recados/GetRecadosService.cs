@@ -15,14 +15,15 @@ namespace recados_api
 
             recadosRepository.ForEach((recado)=>{
                 var dataAtual = DateTime.Now;
-                var dataInserida = DateTime.Now;
 
-                dataInserida = dataInserida.AddYears(int.Parse(recado.Data.Substring(6, 4)));
-                dataInserida = dataInserida.AddMonths(int.Parse(recado.Data.Substring(3, 2)));
-                dataInserida = dataInserida.AddDays(int.Parse(recado.Data.Substring(0, 2)));
+                int year = int.Parse(recado.Data.Substring(6, 4));
+                int month = int.Parse(recado.Data.Substring(3, 2));
+                int day = int.Parse(recado.Data.Substring(0, 2));
 
-                dataInserida = dataInserida.AddMinutes(int.Parse(recado.Horario.Substring(3, 2)));
-                dataInserida = dataInserida.AddHours(int.Parse(recado.Horario.Substring(0, 2)));
+                int hours = int.Parse(recado.Horario.Substring(0, 2));
+                int minutes = int.Parse(recado.Horario.Substring(3, 2));
+
+                var dataInserida = new DateTime(year, month, day, hours, minutes, 0);
 
                 RecadoModeloGet recadoComVencimento = new RecadoModeloGet(){
                     Titulo = recado.Titulo,
