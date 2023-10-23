@@ -14,7 +14,7 @@ namespace recados_api
             List<RecadoModeloGet> recados = new List<RecadoModeloGet>();
 
             recadosRepository.ForEach((recado)=>{
-                var dataAtual = DateTime.Now;
+                var dataAtual = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time"));
 
                 int year = int.Parse(recado.Data.Substring(6, 4));
                 int month = int.Parse(recado.Data.Substring(3, 2));

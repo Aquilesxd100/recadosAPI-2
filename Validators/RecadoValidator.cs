@@ -113,7 +113,7 @@ namespace recados_api
 
         public RecadoValidator DataFutura(){
             if(!(Data is null)){
-                var dataAtual = DateTime.Now;
+                var dataAtual = TimeZoneInfo.ConvertTime(DateTime.Now, TimeZoneInfo.FindSystemTimeZoneById("E. South America Standard Time"));
 
                 int year = int.Parse(Data.Substring(6, 4));
                 int month = int.Parse(Data.Substring(3, 2));
