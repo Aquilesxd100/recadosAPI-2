@@ -74,6 +74,10 @@ namespace recados_api
         }
 
         public UsuarioValidator UsernameValid() {
+            if(Username == null) {
+                return this;
+            }
+
             bool usernameTemNumero = false;
             for (int index = 0; index < Username.Length; index++) {
                 if (char.IsDigit(Username, index)) {
