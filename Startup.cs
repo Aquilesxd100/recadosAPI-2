@@ -27,7 +27,7 @@ namespace recados_api
             services.AddCors();
             services.AddControllers();
             
-            var key = Encoding.ASCII.GetBytes(Env.jwt_secret);
+            var key = Encoding.ASCII.GetBytes(Environment.GetEnvironmentVariable("jwtSecret") ?? Env.jwt_secret);
 
             services.AddAuthentication(x =>
             {
