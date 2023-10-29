@@ -59,7 +59,7 @@ Online em: https://recados-api-c.onrender.com
             Body {
                 Titulo: string,
                 Descricao: string,
-                Data: string (xx/xx/xx),
+                Data: string (xx/xx/xxxx),
                 Horario: string (xx:xx)
             },
             Header {
@@ -88,7 +88,7 @@ Online em: https://recados-api-c.onrender.com
             Body {
                 Titulo: string [opcional],
                 Descricao: string [opcional],
-                Data: string (xx/xx/xx) [opcional],
+                Data: string (xx/xx/xxxx) [opcional],
                 Horario: string (xx:xx) [opcional]
             },
             Query {
@@ -106,8 +106,8 @@ Online em: https://recados-api-c.onrender.com
         Request:
             Query {
                 buscar: string [opcional],
-                depoisDe: string (xx/xx/xx) [opcional],
-                antesDe: string (xx/xx/xx) [opcional],
+                depoisDe: string (xx/xx/xxxx) [opcional],
+                antesDe: string (xx/xx/xxxx) [opcional],
                 turnoDia: string (madrugada || manha || tarde || noite) [opcional],
                 arquivado: boolean [opcional],
                 vencido: boolean [opcional]
